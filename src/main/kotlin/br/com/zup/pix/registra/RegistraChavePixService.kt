@@ -8,8 +8,10 @@ import br.com.zup.pix.ChavePixRepository
 import br.com.zup.shared.exception.ChaveDuplicadaException
 import io.micronaut.http.HttpStatus.CREATED
 import io.micronaut.validation.Validated
+import org.slf4j.LoggerFactory
 import javax.inject.Singleton
 import javax.validation.Valid
+import kotlin.math.log
 
 @Validated
 @Singleton
@@ -18,6 +20,8 @@ class RegistraChavePixService(
     private val itauClient: ItauClient,
     private val bcbClient: BcbClient
 ) {
+
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun registrar(@Valid chavePixRequest: NovaChavePixRequest): ChavePix {
 
@@ -29,10 +33,15 @@ class RegistraChavePixService(
             chavePixRequest.tipoDeConta!!.name
         ).body()?.toModel() ?: throw IllegalStateException("Cliente não encontrado no sistema do Itaú")
 
+        logger.info("Conta encontrada no sistema do itaú [$conta]")
+
         val pix = chavePixRequest.toModel(conta)
         val pixKeyRequest = CreatePixKeyRequest.from(pix)
 
-        val response = bcbClient.registrar(pixKeyRequest)
+        val response = bcbClient.registrar(pixKeyRequest).also {
+            logger.info("Tentativa de registro no BACEN realizada com status final de ${it.status.name} \n chave enviada: $pixKeyRequest")
+        }
+
         if (response.status != CREATED)
             throw IllegalStateException("Erro ao registrar a chave ${pix.chave} no BACEN")
 
