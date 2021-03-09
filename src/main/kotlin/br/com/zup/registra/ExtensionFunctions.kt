@@ -8,7 +8,13 @@ fun RegistraChavePixRequest.toRequestModel(): NovaChavePixRequest {
     return NovaChavePixRequest(
         chave = chave,
         idCliente = idCliente,
-        tipo = if (tipoDeChave == UNKNOWN_TIPO_DE_CHAVE) null else TipoDeChave.valueOf(tipoDeChave.name),
-        tipoDeConta = if (tipoDeConta == UNKNOWN_TIPO_DE_CONTA) null else TipoDeConta.valueOf(tipoDeConta.name)
+        tipo = when (tipoDeChave) {
+            UNKNOWN_TIPO_DE_CHAVE -> null
+            else -> TipoDeChave.valueOf(tipoDeChave.name)
+        },
+        tipoDeConta = when (tipoDeConta) {
+            UNKNOWN_TIPO_DE_CONTA -> null
+            else -> TipoDeConta.valueOf(tipoDeConta.name)
+        }
     )
 }
