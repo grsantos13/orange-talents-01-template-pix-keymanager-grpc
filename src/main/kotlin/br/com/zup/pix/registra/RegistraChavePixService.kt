@@ -1,9 +1,9 @@
 package br.com.zup.pix.registra
 
 import br.com.zup.client.ItauClient
+import br.com.zup.pix.ChavePix
 import br.com.zup.pix.ChavePixRepository
 import io.micronaut.validation.Validated
-import java.lang.IllegalStateException
 import javax.inject.Singleton
 import javax.validation.Valid
 

@@ -15,11 +15,13 @@ enum class TipoDeChave {
                 isValid(chave, null)
             }
         }
-    }, CELULAR {
+    },
+    CELULAR {
         override fun validar(chave: String?): Boolean {
             return !chave.isNullOrBlank() || chave?.matches("^\\+[1-9][0-9]\\d{1,14}\$".toRegex()) ?: false
         }
-    }, EMAIL {
+    },
+    EMAIL {
         override fun validar(chave: String?): Boolean {
             if (chave.isNullOrBlank())
                 return false
@@ -29,12 +31,13 @@ enum class TipoDeChave {
                 isValid(chave, null)
             }
         }
-    }, ALEATORIA {
+    },
+    ALEATORIA {
         override fun validar(chave: String?): Boolean {
             return chave.isNullOrBlank()
         }
     };
 
-    abstract fun validar(chave: String?) : Boolean
+    abstract fun validar(chave: String?): Boolean
 
 }

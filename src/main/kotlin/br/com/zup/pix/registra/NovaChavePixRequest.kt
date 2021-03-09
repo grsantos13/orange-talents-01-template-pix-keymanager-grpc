@@ -1,5 +1,6 @@
 package br.com.zup.pix.registra
 
+import br.com.zup.pix.ChavePix
 import br.com.zup.pix.Conta
 import br.com.zup.pix.TipoDeChave
 import br.com.zup.pix.TipoDeConta
