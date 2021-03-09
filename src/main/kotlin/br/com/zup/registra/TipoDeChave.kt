@@ -10,9 +10,10 @@ enum class TipoDeChave {
             if (chave.isNullOrBlank() || !chave.matches("^[0-9]{11}\$".toRegex()))
                 return false
 
-            val cpfValidator = CPFValidator()
-            cpfValidator.initialize(null)
-            return cpfValidator.isValid(chave, null)
+            return CPFValidator().run {
+                initialize(null)
+                isValid(chave, null)
+            }
         }
     }, CELULAR {
         override fun validar(chave: String?): Boolean {
@@ -22,9 +23,11 @@ enum class TipoDeChave {
         override fun validar(chave: String?): Boolean {
             if (chave.isNullOrBlank())
                 return false
-            val emailValidator = EmailValidator()
-            emailValidator.initialize(null)
-            return emailValidator.isValid(chave, null)
+
+            return EmailValidator().run {
+                initialize(null)
+                isValid(chave, null)
+            }
         }
     }, ALEATORIA {
         override fun validar(chave: String?): Boolean {
