@@ -1,5 +1,7 @@
 package br.com.zup.client
 
+import br.com.zup.pix.Conta
+import br.com.zup.pix.Titular
 import java.util.*
 
 data class ContaResponse(
@@ -8,7 +10,20 @@ data class ContaResponse(
     val agencia: String,
     val numero: String,
     val titular: TitularResponse
-)
+){
+    fun toModel() : Conta {
+        val titularConta = Titular(
+            nome = titular.nome,
+            cpf = titular.cpf
+        )
+        return Conta(
+            instituicao = instituicao.nome,
+            agencia = agencia,
+            numeroDaConta = numero,
+            titular = titularConta
+        )
+    }
+}
 
 data class TitularResponse(
     val id: UUID,

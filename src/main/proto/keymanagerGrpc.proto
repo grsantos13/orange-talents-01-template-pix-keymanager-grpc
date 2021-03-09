@@ -33,4 +33,5 @@ message RegistraChavePixRequest {
 
 message RegistraChavePixResponse {
   string idPix = 1;
+  string idCliente = 2;
 }

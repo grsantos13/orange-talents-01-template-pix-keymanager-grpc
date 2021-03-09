@@ -9,7 +9,7 @@ import io.micronaut.http.client.annotation.Client
 @Client("\${itau.erp.url}")
 interface ItauClient {
     @Get("/api/v1/clientes/{idCliente}/contas")
-    fun buscaPorClienteETipoDeConta(
+    fun buscaContaPorClienteETipoDeConta(
         @PathVariable idCliente: String,
         @QueryValue tipo: String
     ): HttpResponse<ContaResponse>

@@ -1,4 +1,4 @@
-package br.com.zup.registra
+package br.com.zup.pix
 
 import io.micronaut.validation.validator.constraints.EmailValidator
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator

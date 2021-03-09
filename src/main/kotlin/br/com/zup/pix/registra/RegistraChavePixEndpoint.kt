@@ -1,4 +1,4 @@
-package br.com.zup.registra
+package br.com.zup.pix.registra
 
 import br.com.zup.KeymanagerRegistraChavePixGrpcServiceGrpc
 import br.com.zup.RegistraChavePixRequest
@@ -8,8 +8,8 @@ import io.grpc.stub.StreamObserver
 import javax.inject.Singleton
 
 @Singleton
-class RegistraChavePixService(
-    private val itauClient: ItauClient
+class RegistraChavePixEndpoint(
+    private val service: RegistraChavePixService
 ) :
     KeymanagerRegistraChavePixGrpcServiceGrpc.KeymanagerRegistraChavePixGrpcServiceImplBase() {
 
@@ -18,8 +18,12 @@ class RegistraChavePixService(
         responseObserver: StreamObserver<RegistraChavePixResponse>
     ) {
         val chavePixRequest = request.toRequestModel()
-        val response =
-            itauClient.buscaPorClienteETipoDeConta(chavePixRequest.idCliente, chavePixRequest.tipoDeConta.name)
+        val chavePix = service.registrar(chavePixRequest)
+        val pixResponse = RegistraChavePixResponse.newBuilder()
+            .setIdCliente(chavePix.idCliente.toString())
+            .setIdPix(chavePix.id.toString())
+            .build()
+        responseObserver.onNext(pixResponse)
         responseObserver.onCompleted()
     }
 }
