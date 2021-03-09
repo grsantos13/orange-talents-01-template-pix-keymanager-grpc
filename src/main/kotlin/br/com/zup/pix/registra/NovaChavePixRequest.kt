@@ -3,6 +3,7 @@ package br.com.zup.pix.registra
 import br.com.zup.pix.ChavePix
 import br.com.zup.pix.Conta
 import br.com.zup.pix.TipoDeChave
+import br.com.zup.pix.TipoDeChave.ALEATORIA
 import br.com.zup.pix.TipoDeConta
 import br.com.zup.shared.validation.ChavePixValida
 import br.com.zup.shared.validation.UUIDValido
@@ -28,7 +29,10 @@ data class NovaChavePixRequest(
     fun toModel(conta: Conta): ChavePix {
         return ChavePix(
             idCliente = UUID.fromString(idCliente),
-            chave = chave!!,
+            chave = when (tipo) {
+                ALEATORIA -> UUID.randomUUID().toString()
+                else -> chave!!
+            },
             tipo = tipo!!,
             tipoDeConta = tipoDeConta!!,
             conta = conta
