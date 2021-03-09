@@ -34,7 +34,6 @@ data class NovaChavePixRequest(
                 else -> chave!!
             },
             tipo = tipo!!,
-            tipoDeConta = tipoDeConta!!,
             conta = conta
         )
     }

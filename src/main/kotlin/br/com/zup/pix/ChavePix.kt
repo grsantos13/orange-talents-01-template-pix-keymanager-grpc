@@ -1,5 +1,6 @@
 package br.com.zup.pix
 
+import br.com.zup.pix.TipoDeChave.ALEATORIA
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -30,17 +31,12 @@ class ChavePix(
     @field:NotBlank
     @field:Size(max = 77)
     @Column(nullable = false, unique = true)
-    val chave: String,
+    var chave: String,
 
     @field:NotNull
     @Enumerated(STRING)
     @Column(nullable = false)
     val tipo: TipoDeChave,
-
-    @field:NotNull
-    @Enumerated(STRING)
-    @Column(nullable = false)
-    val tipoDeConta: TipoDeConta,
 
     @field:Valid
     @Embedded
@@ -49,5 +45,10 @@ class ChavePix(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: UUID? = null
+
+    fun atualizar(novaChave: String) {
+        if (tipo == ALEATORIA)
+            chave = novaChave
+    }
 
 }

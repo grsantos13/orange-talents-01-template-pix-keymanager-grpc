@@ -1,6 +1,7 @@
 package br.com.zup.client
 
 import br.com.zup.pix.Conta
+import br.com.zup.pix.TipoDeConta
 import br.com.zup.pix.Titular
 import java.util.*
 
@@ -20,7 +21,8 @@ data class ContaResponse(
             instituicao = instituicao.nome,
             agencia = agencia,
             numeroDaConta = numero,
-            titular = titularConta
+            titular = titularConta,
+            tipoDeConta = TipoDeConta.valueOf(tipo)
         )
     }
 }
