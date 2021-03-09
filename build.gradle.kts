@@ -37,7 +37,7 @@ dependencies {
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
-    implementation("org.hibernate:hibernate-validator:7.0.1.Final")
+    implementation("org.hibernate:hibernate-validator:6.1.6.Final")
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
