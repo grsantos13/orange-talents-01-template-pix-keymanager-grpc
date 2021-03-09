@@ -10,6 +10,11 @@ service KeymanagerRegistraChavePixGrpcService {
   rpc registrar (RegistraChavePixRequest) returns (RegistraChavePixResponse) {}
 }
 
+service KeymanagerRemoveChavePixGrpcService {
+  rpc remover (RemoveChavePixRequest) returns (RemoveChavePixResponse) {}
+}
+
+//REGISTRO
 enum TipoDeChave {
   UNKNOWN_TIPO_DE_CHAVE = 0;
   CPF = 1;
@@ -32,6 +37,17 @@ message RegistraChavePixRequest {
 }
 
 message RegistraChavePixResponse {
+  string idPix = 1;
+  string idCliente = 2;
+}
+
+//REMOÇÃO
+message RemoveChavePixRequest {
+  string idPix = 1;
+  string idCliente = 2;
+}
+
+message RemoveChavePixResponse {
   string idPix = 1;
   string idCliente = 2;
 }
