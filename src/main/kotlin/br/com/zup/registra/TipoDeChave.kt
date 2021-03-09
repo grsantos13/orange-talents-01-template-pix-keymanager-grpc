@@ -1,7 +1,37 @@
 package br.com.zup.registra
 
+import io.micronaut.validation.validator.constraints.EmailValidator
+import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator
+
 enum class TipoDeChave {
 
-    CPF, CELULAR, EMAIL, ALEATORIA
+    CPF {
+        override fun validar(chave: String?): Boolean {
+            if (chave.isNullOrBlank() || !chave.matches("^[0-9]{11}\$".toRegex()))
+                return false
+
+            val cpfValidator = CPFValidator()
+            cpfValidator.initialize(null)
+            return cpfValidator.isValid(chave, null)
+        }
+    }, CELULAR {
+        override fun validar(chave: String?): Boolean {
+            return !chave.isNullOrBlank() || chave?.matches("^\\+[1-9][0-9]\\d{1,14}\$".toRegex()) ?: false
+        }
+    }, EMAIL {
+        override fun validar(chave: String?): Boolean {
+            if (chave.isNullOrBlank())
+                return false
+            val emailValidator = EmailValidator()
+            emailValidator.initialize(null)
+            return emailValidator.isValid(chave, null)
+        }
+    }, ALEATORIA {
+        override fun validar(chave: String?): Boolean {
+            return chave.isNullOrBlank()
+        }
+    };
+
+    abstract fun validar(chave: String?) : Boolean
 
 }
