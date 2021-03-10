@@ -22,7 +22,7 @@ class FiltroPorChave(
         val pixResponse = repository.findByChave(chave)
             .map { ChavePixResponse.from(it) }
             .orElseGet {
-                logger.info("Chave $chave não encontrada internamente, inicial busca no BACEN.")
+                logger.info("Chave $chave não encontrada internamente, iniciando busca no BACEN.")
                 val response = bcbClient.consultar(chave)
                 when (response.status) {
                     OK -> response.body()!!.toModel()

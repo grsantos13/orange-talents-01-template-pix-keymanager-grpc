@@ -12,6 +12,7 @@ import br.com.zup.pix.ChavePixRepository
 import br.com.zup.shared.exception.ErrorHandler
 import com.google.protobuf.Timestamp
 import io.grpc.stub.StreamObserver
+import io.micronaut.validation.validator.Validator
 import java.time.ZoneId
 import javax.inject.Singleton
 
@@ -19,7 +20,8 @@ import javax.inject.Singleton
 @ErrorHandler
 class ConsultaChavePixEndpoint(
     private val repository: ChavePixRepository,
-    private val bcbClient: BcbClient
+    private val bcbClient: BcbClient,
+    private val validator: Validator
 ) : KeymanagerConsultaChavePixGrpcServiceGrpc.KeymanagerConsultaChavePixGrpcServiceImplBase() {
 
     override fun consultar(
@@ -27,7 +29,7 @@ class ConsultaChavePixEndpoint(
         responseObserver: StreamObserver<ConsultaChavePixResponse>
     ) {
 
-        val filtro = request.toFilter()
+        val filtro = request.toFilter(validator)
         val chavePix = filtro.filtrar(repository, bcbClient)
         val response = converterParaResponse(chavePix)
 
