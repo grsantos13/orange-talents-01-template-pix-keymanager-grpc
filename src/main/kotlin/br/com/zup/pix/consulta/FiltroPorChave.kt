@@ -20,16 +20,7 @@ class FiltroPorChave(
 
     override fun filtrar(repository: ChavePixRepository, bcbClient: BcbClient): ChavePixResponse {
         return repository.findByChave(chave)
-            .map {
-                ChavePixResponse(
-                    IdPix = it.id,
-                    IdCliente = it.idCliente,
-                    tipo = it.tipo,
-                    chave = it.chave,
-                    conta = it.conta,
-                    registradaEm = it.criadaEm
-                )
-            }
+            .map { ChavePixResponse.from(it) }
             .orElseGet {
                 logger.info("Chave $chave não encontrada internamente, inicial busca no BACEN.")
                 val response = bcbClient.consultar(chave)

@@ -14,11 +14,8 @@ class ConsultaChavePixService(
     private val bcbClient: BcbClient
 ) {
 
-    fun consultar(request: ConsultaChavePixRequest): ChavePix {
-        if (request.consultaCase == CHAVE){
-            repository.findByChave(request.chave)
-        }else if(request.consultaCase == IDPIXEIDCLIENTE){
-            repository.findByIdAndIdCliente()
-        }
+    fun consultar(request: ConsultaChavePixRequest): ChavePixResponse {
+        val filtro = request.toFilter()
+        return filtro.filtrar(repository, bcbClient)
     }
 }

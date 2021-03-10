@@ -19,7 +19,7 @@ class ConsultaChavePixEndpoint(
         responseObserver: StreamObserver<ConsultaChavePixResponse>
     ) {
 
-        val chavePix: ChavePix = service.consultar(request)
+        val chavePix = service.consultar(request)
 
     }
 }

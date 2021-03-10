@@ -14,4 +14,17 @@ data class ChavePixResponse(
     val conta: Conta,
     val registradaEm: LocalDateTime
 ) {
+
+    companion object {
+        fun from(chave: ChavePix): ChavePixResponse {
+            return ChavePixResponse(
+                IdPix = chave.id,
+                IdCliente = chave.idCliente,
+                tipo = chave.tipo,
+                chave = chave.chave,
+                conta = chave.conta,
+                registradaEm = chave.criadaEm
+            )
+        }
+    }
 }
