@@ -1,22 +1,22 @@
 package br.com.zup.shared.exception.handlers
 
-import br.com.zup.shared.exception.ChaveInexistenteException
+import br.com.zup.shared.exception.ChaveDuplicadaException
 import br.com.zup.shared.exception.ExceptionHandler
 import br.com.zup.shared.exception.ExceptionHandler.StatusWrapper
 import io.grpc.Status
 import javax.inject.Singleton
 
 @Singleton
-class ChaveInexistenteHandler : ExceptionHandler<ChaveInexistenteException> {
-    override fun handle(e: ChaveInexistenteException): StatusWrapper {
+class ChaveDuplicadaExceptionHandler : ExceptionHandler<ChaveDuplicadaException> {
+    override fun handle(e: ChaveDuplicadaException): StatusWrapper {
         return StatusWrapper(
-            Status.NOT_FOUND
+            Status.ALREADY_EXISTS
                 .withDescription(e.message)
                 .withCause(e)
         )
     }
 
     override fun supports(e: Exception): Boolean {
-        return e is ChaveInexistenteException
+        return e is ChaveDuplicadaException
     }
 }

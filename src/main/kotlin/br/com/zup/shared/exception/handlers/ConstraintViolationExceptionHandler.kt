@@ -10,7 +10,7 @@ import javax.inject.Singleton
 import javax.validation.ConstraintViolationException
 
 @Singleton
-class ConstraintViolationHandler : ExceptionHandler<ConstraintViolationException> {
+class ConstraintViolationExceptionHandler : ExceptionHandler<ConstraintViolationException> {
 
     override fun handle(e: ConstraintViolationException): StatusWrapper {
         val details = BadRequest.newBuilder()
