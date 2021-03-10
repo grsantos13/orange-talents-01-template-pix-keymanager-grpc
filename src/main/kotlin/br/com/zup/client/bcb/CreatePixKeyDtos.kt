@@ -9,21 +9,21 @@ import java.time.LocalDateTime
 data class CreatePixKeyRequest(
     val key: String,
     val keyType: KeyType,
-    val bankAccount: BankAccountRequest,
-    val owner: OwnerRequest
+    val bankAccount: BankAccount,
+    val owner: Owner
 ) {
     companion object {
         fun from(chavePix: ChavePix): CreatePixKeyRequest {
             return CreatePixKeyRequest(
                 key = chavePix.chave,
                 keyType = KeyType.from(chavePix.tipo),
-                bankAccount = BankAccountRequest(
+                bankAccount = BankAccount(
                     participant = Conta.ISPB,
                     branch = chavePix.conta.agencia,
                     accountNumber = chavePix.conta.numeroDaConta,
                     accountType = AccountType.from(chavePix.conta.tipoDeConta)
                 ),
-                owner = OwnerRequest(
+                owner = Owner(
                     type = OwnerType.NATURAL_PERSON,
                     name = chavePix.conta.titular.nome,
                     taxIdNumber = chavePix.conta.titular.cpf
@@ -33,7 +33,7 @@ data class CreatePixKeyRequest(
     }
 }
 
-data class OwnerRequest(
+data class Owner(
     val type: OwnerType,
     val name: String,
     val taxIdNumber: String
@@ -43,14 +43,14 @@ enum class OwnerType {
     NATURAL_PERSON, LEGAL_PERSON
 }
 
-data class BankAccountRequest(
+data class BankAccount(
     val participant: String,
     val branch: String,
     val accountNumber: String,
     val accountType: AccountType
 )
 
-enum class AccountType(private val tipoDeConta: TipoDeConta) {
+enum class AccountType(val tipoDeConta: TipoDeConta) {
     CACC(TipoDeConta.CONTA_CORRENTE),
     SVGS(TipoDeConta.CONTA_POUPANCA);
 
@@ -63,7 +63,7 @@ enum class AccountType(private val tipoDeConta: TipoDeConta) {
 
 }
 
-enum class KeyType(private val tipoDeChave: TipoDeChave?) {
+enum class KeyType(val tipoDeChave: TipoDeChave?) {
     CPF(TipoDeChave.CPF),
     CNPJ(null),
     PHONE(TipoDeChave.CELULAR),
@@ -82,7 +82,7 @@ enum class KeyType(private val tipoDeChave: TipoDeChave?) {
 data class CreatePixKeyResponse(
     val keyType: KeyType,
     val key: String,
-    val bankAccount: BankAccountRequest,
-    val owner: OwnerRequest,
+    val bankAccount: BankAccount,
+    val owner: Owner,
     val createdAt: LocalDateTime
 )

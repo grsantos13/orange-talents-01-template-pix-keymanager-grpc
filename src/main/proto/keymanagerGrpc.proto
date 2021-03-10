@@ -59,8 +59,15 @@ message RemoveChavePixResponse {
 
 //CONSULTA
 message ConsultaChavePixRequest {
-  string idPix = 1;
-  string idCliente = 2;
+  message ConsultaPorClienteEIdPix{
+    string idPix = 1;
+    string idCliente = 2;
+  }
+
+  oneof consulta {
+    ConsultaPorClienteEIdPix idPixEIdCliente = 1;
+    string chave = 2;
+  }
 }
 
 message Titular {
