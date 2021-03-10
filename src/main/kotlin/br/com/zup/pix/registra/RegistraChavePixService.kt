@@ -36,7 +36,6 @@ class RegistraChavePixService(
         logger.info("Conta encontrada no sistema do itaú [$conta]")
 
         val pix = chavePixRequest.toModel(conta)
-        logger.info("$pix")
         val pixKeyRequest = CreatePixKeyRequest.from(pix)
 
         val response = bcbClient.registrar(pixKeyRequest).also {
