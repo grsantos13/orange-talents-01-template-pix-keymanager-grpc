@@ -18,10 +18,10 @@ data class CreatePixKeyRequest(
                 key = chavePix.chave,
                 keyType = KeyType.from(chavePix.tipo),
                 bankAccount = BankAccountRequest(
-                    Conta.ISPB,
-                    chavePix.conta.agencia,
-                    chavePix.conta.numeroDaConta,
-                    AccountType.from(chavePix.conta.tipoDeConta)
+                    participant = Conta.ISPB,
+                    branch = chavePix.conta.agencia,
+                    accountNumber = chavePix.conta.numeroDaConta,
+                    accountType = AccountType.from(chavePix.conta.tipoDeConta)
                 ),
                 owner = OwnerRequest(
                     type = OwnerType.NATURAL_PERSON,
