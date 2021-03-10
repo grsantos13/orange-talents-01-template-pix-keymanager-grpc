@@ -7,6 +7,8 @@ import br.com.zup.KeymanagerConsultaChavePixGrpcServiceGrpc
 import br.com.zup.TipoDeChave
 import br.com.zup.TipoDeConta
 import br.com.zup.Titular
+import br.com.zup.client.bcb.BcbClient
+import br.com.zup.pix.ChavePixRepository
 import br.com.zup.shared.exception.ErrorHandler
 import com.google.protobuf.Timestamp
 import io.grpc.stub.StreamObserver
@@ -16,7 +18,8 @@ import javax.inject.Singleton
 @Singleton
 @ErrorHandler
 class ConsultaChavePixEndpoint(
-    private val service: ConsultaChavePixService
+    private val repository: ChavePixRepository,
+    private val bcbClient: BcbClient
 ) : KeymanagerConsultaChavePixGrpcServiceGrpc.KeymanagerConsultaChavePixGrpcServiceImplBase() {
 
     override fun consultar(
@@ -24,7 +27,8 @@ class ConsultaChavePixEndpoint(
         responseObserver: StreamObserver<ConsultaChavePixResponse>
     ) {
 
-        val chavePix = service.consultar(request)
+        val filtro = request.toFilter()
+        val chavePix = filtro.filtrar(repository, bcbClient)
         val response = converterParaResponse(chavePix)
 
         responseObserver.onNext(response)
