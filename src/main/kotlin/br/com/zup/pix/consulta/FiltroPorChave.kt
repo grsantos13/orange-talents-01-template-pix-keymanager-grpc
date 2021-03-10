@@ -19,7 +19,7 @@ class FiltroPorChave(
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun filtrar(repository: ChavePixRepository, bcbClient: BcbClient): ChavePixResponse {
-        return repository.findByChave(chave)
+        val pixResponse = repository.findByChave(chave)
             .map { ChavePixResponse.from(it) }
             .orElseGet {
                 logger.info("Chave $chave não encontrada internamente, inicial busca no BACEN.")
@@ -29,5 +29,6 @@ class FiltroPorChave(
                     else -> throw ChaveInexistenteException("Chave não encontrada com o valor $chave")
                 }
             }
+        return pixResponse
     }
 }

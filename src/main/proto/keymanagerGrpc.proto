@@ -80,6 +80,7 @@ message Conta {
   string agencia = 2;
   string numero = 3;
   TipoDeConta tipoDeConta = 4;
+  Titular titular = 5;
 }
 
 message ConsultaChavePixResponse {
@@ -87,9 +88,8 @@ message ConsultaChavePixResponse {
   string idCliente = 2;
   TipoDeChave tipoDeChave = 3;
   string chave = 4;
-  Titular titular = 5;
-  Conta conta = 6;
-  google.protobuf.Timestamp criadaEm = 7;
+  Conta conta = 5;
+  google.protobuf.Timestamp criadaEm = 6;
 }
 
 
