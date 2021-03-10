@@ -1,6 +1,7 @@
 package br.com.zup.pix
 
 import br.com.zup.pix.TipoDeChave.ALEATORIA
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Embedded
@@ -45,6 +46,10 @@ class ChavePix(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: UUID? = null
+
+    @field:NotNull
+    @Column(nullable = false)
+    val criadaEm: LocalDateTime = LocalDateTime.now()
 
     fun atualizar(novaChave: String) {
         if (tipo == ALEATORIA)

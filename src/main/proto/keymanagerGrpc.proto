@@ -4,6 +4,7 @@ option java_multiple_files = true;
 option java_package = "br.com.zup";
 option java_outer_classname = "KeymanagerGrpc";
 
+import "google/protobuf/timestamp.proto";
 package br.com.zup;
 
 service KeymanagerRegistraChavePixGrpcService {
@@ -12,6 +13,10 @@ service KeymanagerRegistraChavePixGrpcService {
 
 service KeymanagerRemoveChavePixGrpcService {
   rpc remover (RemoveChavePixRequest) returns (RemoveChavePixResponse) {}
+}
+
+service KeymanagerConsultaChavePixGrpcService {
+  rpc consultar (ConsultaChavePixRequest) returns (ConsultaChavePixResponse) {}
 }
 
 //REGISTRO
@@ -51,3 +56,33 @@ message RemoveChavePixResponse {
   string idPix = 1;
   string idCliente = 2;
 }
+
+//CONSULTA
+message ConsultaChavePixRequest {
+  string idPix = 1;
+  string idCliente = 2;
+}
+
+message Titular {
+  string nome = 1;
+  string cpf = 2;
+}
+
+message Conta {
+  string instituicao = 1;
+  string agencia = 2;
+  string numero = 3;
+  TipoDeConta tipoDeConta = 4;
+}
+
+message ConsultaChavePixResponse {
+  string idPix = 1;
+  string idCliente = 2;
+  TipoDeChave tipoDeChave = 3;
+  string chave = 4;
+  Titular titular = 5;
+  Conta conta = 6;
+  google.protobuf.Timestamp criadaEm = 7;
+}
+
+
