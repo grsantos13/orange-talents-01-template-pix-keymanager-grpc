@@ -49,7 +49,7 @@ class ChavePix(
 
     @field:NotNull
     @Column(nullable = false)
-    val criadaEm: LocalDateTime = LocalDateTime.now()
+    val registradaEm: LocalDateTime = LocalDateTime.now()
 
     fun atualizar(novaChave: String) {
         if (tipo == ALEATORIA)

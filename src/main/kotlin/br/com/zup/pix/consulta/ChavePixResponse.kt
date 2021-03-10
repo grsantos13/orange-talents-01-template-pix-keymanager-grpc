@@ -23,7 +23,7 @@ data class ChavePixResponse(
                 tipo = chave.tipo,
                 chave = chave.chave,
                 conta = chave.conta,
-                registradaEm = chave.criadaEm
+                registradaEm = chave.registradaEm
             )
         }
     }
