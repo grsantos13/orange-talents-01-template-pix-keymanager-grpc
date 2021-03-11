@@ -19,7 +19,7 @@ grpc:
 
 itau:
   erp:
-    url: 'http://localhost:9091'
+    url: ${ITAU_ERP_URL:`http://localhost:9091`}
 
 bcb:
-  url: 'http://localhost:8082'
+  url: ${BCB_URL:`http://localhost:8082`}
