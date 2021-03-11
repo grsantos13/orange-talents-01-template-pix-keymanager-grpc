@@ -24,6 +24,9 @@ class ListagemChavePixEndpoint(
         request: ListaChavesPixRequest,
         responseObserver: StreamObserver<ListaChavesPixResponse>
     ) {
+        if (request.idCliente.isNullOrBlank())
+            throw IllegalArgumentException("O id do cliente não pode ser vazio ou nulo")
+
         val chavePixList = repository.findByIdCliente(UUID.fromString(request.idCliente))
         val pixGrpcResponse = mapToChavePixGrpcResponse(chavePixList)
 
