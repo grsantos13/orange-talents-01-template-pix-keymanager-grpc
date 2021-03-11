@@ -8,3 +8,29 @@ services:
     image: "public.ecr.aws/d8b2x5c9/orange-stack-sat-itau-erp"
     ports:
       - 9091:9091
+
+  keymanager-rest:
+    image: "gustavosantoszup/keymanager-rest"
+    build:
+      context: ../keymanager-rest
+      dockerfile: ./Dockerfile
+    environment:
+      KEYMANAGER_GRPC_URL: keymanager-grpc:50051
+    ports:
+      - 8080:8080
+    depends_on:
+      - keymanager-grpc
+
+  keymanager-grpc:
+    image: "gustavosantoszup/keymanager-grpc"
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 50051:50051
+    environment:
+      ITAU_ERP_URL: http://erp-itau:9091
+      BCB_URL: http://bcb:8082
+    depends_on:
+      - erp-itau
+      - bcb
