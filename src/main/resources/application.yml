@@ -11,6 +11,12 @@ datasources:
     dialect: H2
 jpa.default.properties.hibernate.hbm2ddl.auto: update
 
+grpc:
+  server:
+    port: ${PORT:50051}
+    keep-alive-time: 3h
+    max-inbound-message-size: 1024
+
 itau:
   erp:
     url: 'http://localhost:9091'
