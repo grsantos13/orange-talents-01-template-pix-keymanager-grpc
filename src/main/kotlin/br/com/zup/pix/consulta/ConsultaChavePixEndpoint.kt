@@ -61,7 +61,7 @@ class ConsultaChavePixEndpoint(
                     )
                     .build()
             )
-            .setCriadaEm(
+            .setRegistradaEm(
                 Timestamp.newBuilder()
                     .setNanos(instant.nano)
                     .setSeconds(instant.epochSecond)

@@ -93,7 +93,7 @@ message ConsultaChavePixResponse {
   TipoDeChave tipoDeChave = 3;
   string chave = 4;
   Conta conta = 5;
-  google.protobuf.Timestamp criadaEm = 6;
+  google.protobuf.Timestamp registradaEm = 6;
 }
 
 //LISTAGEM
