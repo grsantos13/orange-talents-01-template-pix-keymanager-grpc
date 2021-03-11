@@ -39,4 +39,8 @@ class Conta(
     companion object {
         const val ISPB = "60701190"
     }
+
+    override fun toString(): String {
+        return "Conta(instituicao='$instituicao', agencia='$agencia', numeroDaConta='$numeroDaConta', titular=$titular, tipoDeConta=$tipoDeConta)"
+    }
 }

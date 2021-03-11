@@ -31,6 +31,26 @@ services:
     environment:
       ITAU_ERP_URL: http://erp-itau:9091
       BCB_URL: http://bcb:8082
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: keymanager
+      DB_USERNAME: keymanager
+      DB_PASSWORD: keymanager
     depends_on:
       - erp-itau
       - bcb
+
+  postgres:
+    image: 'postgres:alpine'
+    volumes:
+      - postgreskeymanager-volume:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: keymanager
+      POSTGRES_PASSWORD: keymanager
+      POSTGRES_DB: keymanager
+      POSTGRES_HOST: postgres
+
+volumes:
+  postgreskeymanager-volume:
