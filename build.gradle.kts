@@ -41,6 +41,9 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut.xml:micronaut-jackson-xml")
     implementation ("org.postgresql:postgresql:42.2.19")
+    implementation( "io.micronaut:micronaut-tracing")
+    implementation("io.jaegertracing:jaeger-thrift:0.31.0")
+    runtimeOnly("io.opentracing.contrib:opentracing-grpc:0.2.3")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 

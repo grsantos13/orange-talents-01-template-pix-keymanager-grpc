@@ -24,3 +24,15 @@ itau:
 
 bcb:
   url: ${BCB_URL:`http://localhost:8082`}
+
+
+tracing:
+  jaeger:
+    enabled: ${JAEGER_ENABLED:true}
+    sampler:
+      probability: ${JAEGER_SAMPLE:1}
+    sender:
+      endpoint: ${JAEGER_ENDPOINT:`http://localhost:14268/api/traces`}
+    reporter:
+      flushInterval: 2000
+      maxQueueSize: 200
