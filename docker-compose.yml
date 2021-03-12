@@ -16,6 +16,9 @@ services:
       dockerfile: ./Dockerfile
     environment:
       KEYMANAGER_GRPC_URL: keymanager-grpc:50051
+      HEALTHCHECK_KEYMANAGER_HOST: keymanager-rest
+      HEALTHCHECK_KEYMANAGER_PORT: 8080
+      HEALTHCHECK_KEYMANAGER_ENDPOINT: check-grpc-status
     ports:
       - 8080:8080
     depends_on:
@@ -39,6 +42,7 @@ services:
     depends_on:
       - erp-itau
       - bcb
+      - postgres
 
   postgres:
     image: 'postgres:alpine'
@@ -52,5 +56,26 @@ services:
       POSTGRES_DB: keymanager
       POSTGRES_HOST: postgres
 
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ../keymanager-rest/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheuskeymanager-volume:/etc/prometheus/
+    network_mode: bridge
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafanakeymanager-volume:/var/lib/grafana
+    network_mode: bridge
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
 volumes:
   postgreskeymanager-volume:
+  grafanakeymanager-volume:
+  prometheuskeymanager-volume:
