@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keymanager-grpc-configmap
+data:
+  DB_HOST: { { .Values.app.DB_PASSWORD | b64enc | quote } }
+  DB_PORT: { { .Values.app.DB_PORT } }
+  DB_NAME: { { .Values.app.DB_NAME } }
+  DB_USERNAME: { { .Values.app.DB_USERNAME } }
+  ITAU_ERP_URL: { { .Values.app.ITAU_ERP_URL } }
+  BCB_URL: { { .Values.app.BCB_URL } }
