@@ -3,7 +3,10 @@ package br.com.zup.data
 import br.com.zup.ListaChavesPixResponse
 import br.com.zup.client.bcb.AccountType
 import br.com.zup.client.bcb.BankAccount
+import br.com.zup.client.bcb.CreatePixKeyRequest
+import br.com.zup.client.bcb.CreatePixKeyResponse
 import br.com.zup.client.bcb.KeyType
+import br.com.zup.client.bcb.KeyType.PHONE
 import br.com.zup.client.bcb.Owner
 import br.com.zup.client.bcb.OwnerType
 import br.com.zup.client.bcb.PixKeyDetailsResponse
@@ -23,20 +26,31 @@ class TestData {
             return PixKeyDetailsResponse(
                 keyType = KeyType.EMAIL,
                 key = "email@email.com",
-                bankAccount = BankAccount(
-                    participant = "60746948",
-                    branch = "0001",
-                    accountNumber = "000001",
-                    accountType = AccountType.CACC
-                ),
-                owner = Owner(
-                    type = OwnerType.NATURAL_PERSON,
-                    name = "Usuário anônimo",
-                    taxIdNumber = "13579808642"
-                ),
+                bankAccount = bankAccountElse(),
+                owner = owner(),
                 createdAt = LocalDateTime.now()
             )
         }
+
+        private fun owner() = Owner(
+            type = OwnerType.NATURAL_PERSON,
+            name = "Gustavo Santos",
+            taxIdNumber = "20783911076"
+        )
+
+        private fun bankAccountItau() = BankAccount(
+            participant = "60701190",
+            branch = "0001",
+            accountNumber = "000001",
+            accountType = AccountType.CACC
+        )
+
+        private fun bankAccountElse() = BankAccount(
+            participant = "60746948",
+            branch = "0001",
+            accountNumber = "000001",
+            accountType = AccountType.CACC
+        )
 
         fun criarChave(idCliente: UUID, chave: String?, tipo: TipoDeChave): ChavePix {
             return ChavePix(
@@ -70,6 +84,26 @@ class TestData {
                     .build()
             }
         }
+
+        fun criarCreatePixKeyRequest(): CreatePixKeyRequest {
+            return CreatePixKeyRequest(
+                key = "+5519999999999",
+                keyType = PHONE,
+                bankAccount = bankAccountItau(),
+                owner = owner()
+            )
+        }
+
+        fun criarCreatePixKeyResponse(): CreatePixKeyResponse {
+            return CreatePixKeyResponse(
+                key = "+5519999999999",
+                keyType = KeyType.PHONE,
+                bankAccount = bankAccountItau(),
+                owner = owner(),
+                createdAt = LocalDateTime.now()
+            )
+        }
+
     }
 
 

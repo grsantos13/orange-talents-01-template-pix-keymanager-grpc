@@ -15,7 +15,7 @@ fun ConsultaChavePixRequest.toFilter(validator: Validator): Filtro {
 
     val validation = validator.validate(filtro)
     if (validation.isNotEmpty())
-        throw throw ConstraintViolationException(validation)
+        throw ConstraintViolationException(validation)
 
     return filtro
 }

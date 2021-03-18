@@ -173,10 +173,16 @@ internal class ConsultaChavePixEndpointTest(
             grpcClient.consultar(ConsultaChavePixRequest.newBuilder().setChave("").build())
         }
 
+        val exceptionPorConsultaInvalida = assertThrows<StatusRuntimeException> {
+            grpcClient.consultar(ConsultaChavePixRequest.newBuilder().build())
+        }
+
         assertEquals(Status.INVALID_ARGUMENT.code, exceptionPorChave.status.code)
         assertEquals("Erro de validação dos argumentos", exceptionPorChave.status.description)
         assertEquals(Status.INVALID_ARGUMENT.code, exceptionPorIdClienteEIdPix.status.code)
         assertEquals("Erro de validação dos argumentos", exceptionPorIdClienteEIdPix.status.description)
+        assertEquals(Status.INVALID_ARGUMENT.code, exceptionPorConsultaInvalida.status.code)
+        assertEquals("Chave inválida ou não informada.", exceptionPorConsultaInvalida.status.description)
     }
 
     @MockBean(BcbClient::class)
