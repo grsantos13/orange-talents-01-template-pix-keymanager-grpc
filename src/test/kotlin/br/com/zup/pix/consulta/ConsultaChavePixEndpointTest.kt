@@ -10,6 +10,7 @@ import br.com.zup.client.bcb.KeyType
 import br.com.zup.client.bcb.Owner
 import br.com.zup.client.bcb.OwnerType
 import br.com.zup.client.bcb.PixKeyDetailsResponse
+import br.com.zup.data.TestData
 import br.com.zup.pix.ChavePix
 import br.com.zup.pix.ChavePixRepository
 import br.com.zup.pix.Conta
@@ -49,7 +50,7 @@ internal class ConsultaChavePixEndpointTest(
 
     @BeforeEach
     fun setup() {
-        repository.save(criarChave(ID_CLIENTE, "gsantos@email.com", EMAIL))
+        repository.save(TestData.criarChave(ID_CLIENTE, "gsantos@email.com", EMAIL))
     }
 
     @AfterEach
@@ -121,9 +122,9 @@ internal class ConsultaChavePixEndpointTest(
 
     @Test
     fun `consulta chave pelo valor da chave no bcb (nao existe localmente)`() {
-        val clientResponse = criarPixKeyDetailsResponse()
-        Mockito.`when`(bcbClient.consultar(clientResponse.key))
-            .thenReturn(HttpResponse.ok(clientResponse))
+        val clientResponse = TestData.criarPixKeyDetailsResponse()
+        Mockito.`when`(bcbClient.consultar("email@email.com"))
+            .thenReturn(HttpResponse.ok(TestData.criarPixKeyDetailsResponse()))
 
         val grpcResponse = grpcClient.consultar(
             ConsultaChavePixRequest.newBuilder()
@@ -176,40 +177,6 @@ internal class ConsultaChavePixEndpointTest(
         assertEquals("Erro de validação dos argumentos", exceptionPorChave.status.description)
         assertEquals(Status.INVALID_ARGUMENT.code, exceptionPorIdClienteEIdPix.status.code)
         assertEquals("Erro de validação dos argumentos", exceptionPorIdClienteEIdPix.status.description)
-    }
-
-    private fun criarChave(idCliente: UUID, chave: String?, tipo: TipoDeChave): ChavePix {
-        return ChavePix(
-            idCliente = idCliente,
-            chave = chave ?: UUID.randomUUID().toString(),
-            tipo = tipo,
-            conta = Conta(
-                instituicao = "ITAÚ UNIBANCO S.A.",
-                titular = Titular(nome = "Gustavo Santos", cpf = "12332112233"),
-                agencia = "1234",
-                numeroDaConta = "987657",
-                tipoDeConta = CONTA_CORRENTE
-            )
-        )
-    }
-
-    private fun criarPixKeyDetailsResponse(): PixKeyDetailsResponse {
-        return PixKeyDetailsResponse(
-            keyType = KeyType.EMAIL,
-            key = "email@email.com",
-            bankAccount = BankAccount(
-                participant = "60746948",
-                branch = "0001",
-                accountNumber = "000001",
-                accountType = AccountType.CACC
-            ),
-            owner = Owner(
-                type = OwnerType.NATURAL_PERSON,
-                name = "Usuário anônimo",
-                taxIdNumber = "13579808642"
-            ),
-            createdAt = LocalDateTime.now()
-        )
     }
 
     @MockBean(BcbClient::class)
