@@ -18,7 +18,10 @@ enum class TipoDeChave {
     },
     CELULAR {
         override fun validar(chave: String?): Boolean {
-            return !chave.isNullOrBlank() || chave?.matches("^\\+[1-9][0-9]\\d{1,14}\$".toRegex()) ?: false
+            if (chave.isNullOrBlank())
+                return false
+
+            return chave?.matches("^\\+[1-9][0-9]\\d{1,14}\$".toRegex()) ?: false
         }
     },
     EMAIL {

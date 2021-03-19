@@ -133,10 +133,7 @@ internal class RegistraChavePixEndpointTest(
     }
 
     @Test
-    fun `erro ao passar chave unknown`() {
-        Mockito.`when`(itauClient.buscaContaPorClienteETipoDeConta(ID_CLIENTE.toString(), "CONTA_CORRENTE"))
-            .thenReturn(HttpResponse.notFound())
-
+    fun `erro ao passar chave e tipo de conta unknown`() {
         val exception = assertThrows<StatusRuntimeException> {
             grpcClient.registrar(
                 RegistraChavePixRequest.newBuilder()
@@ -144,6 +141,21 @@ internal class RegistraChavePixEndpointTest(
                     .setTipoDeChave(TipoDeChave.UNKNOWN_TIPO_DE_CHAVE)
                     .setChave("+5519999999999")
                     .setTipoDeConta(TipoDeConta.UNKNOWN_TIPO_DE_CONTA)
+                    .build()
+            )
+        }
+
+        assertEquals(Status.INVALID_ARGUMENT.code, exception.status.code)
+        assertEquals("Erro de validação dos argumentos", exception.status.description)
+
+    }
+
+    @Test
+    fun `erro ao nao passar os parametros corretos`() {
+
+        val exception = assertThrows<StatusRuntimeException> {
+            grpcClient.registrar(
+                RegistraChavePixRequest.newBuilder()
                     .build()
             )
         }
