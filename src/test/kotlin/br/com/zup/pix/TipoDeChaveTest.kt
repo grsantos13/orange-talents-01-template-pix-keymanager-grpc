@@ -57,9 +57,33 @@ internal class TipoDeChaveTest {
                 assertFalse(validar("+5519999999999999999"))
             }
         }
-
     }
 
+    @Nested
+    inner class EMAIL {
+
+        @Test
+        fun `deve retornar true para email valido`(){
+            assertTrue(TipoDeChave.EMAIL.validar("email@email.com"))
+        }
+
+        @Test
+        fun `deve retornar false para email em nulo ou em branco`(){
+            with(TipoDeChave.EMAIL){
+                assertFalse(validar(""))
+                assertFalse(validar(null))
+            }
+        }
+
+        @Test
+        fun `deve retornar true para email invalido`(){
+            with(TipoDeChave.CELULAR){
+                assertFalse(validar("email"))
+                assertFalse(validar("@email"))
+                assertFalse(validar("email@email"))
+            }
+        }
+    }
 
     @Nested
     inner class ALEATORIA {
