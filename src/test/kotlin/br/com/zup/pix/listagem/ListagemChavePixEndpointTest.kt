@@ -84,7 +84,7 @@ internal class ListagemChavePixEndpointTest(
         val exception = assertThrows<StatusRuntimeException> {
             grpcClient.listar(
                 ListaChavesPixRequest.newBuilder()
-                    .setIdCliente("")
+                    .setIdCliente   ("")
                     .build()
             )
         }

@@ -186,7 +186,7 @@ internal class RegistraChavePixEndpointTest(
     }
 
     @Factory
-    class Clients {
+    class Client{
         @Bean
         fun blockingStub(@GrpcChannel(GrpcServerChannel.NAME) channel: ManagedChannel): KeymanagerRegistraChavePixGrpcServiceGrpc.KeymanagerRegistraChavePixGrpcServiceBlockingStub? {
             return KeymanagerRegistraChavePixGrpcServiceGrpc.newBlockingStub(channel)
